@@ -1,0 +1,105 @@
+::-webkit-scrollbar {
+    /*滚动条整体样式*/
+    width: 5px;
+    /*高宽分别对应横竖滚动条的尺寸*/
+    height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    /*滚动条里面小方块*/
+    border-radius: 3px;
+    background-color: #696969;
+}
+
+::-webkit-scrollbar-track {
+    /*滚动条里面轨道*/
+    border-radius: 3px;
+    background: #FFFAEE;
+}
+
+html {
+    /* 设置滚动条的样式 */
+    scrollbar-arrow-color: red;
+    scrollbar-face-color: #000;
+    scrollbar-3dlight-color: #696969;
+    scrollbar-highlight-color: #696969;
+    scrollbar-shadow-color: #000;
+    scrollbar-darkshadow-color: #000;
+    scrollbar-track-color: #000;
+    /* 颜色 */
+    background-color: #FFFAEE;
+    color: #000000;
+}
+
+#container {
+    /* 定位 */
+    position: fixed;
+    top: 32px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* 布局 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#content {
+    text-align: center;
+}
+
+#content p {
+    user-select: none;
+}
+
+#content img {
+    cursor: move;
+}
+
+#file {
+    /* 定位 */
+    position: fixed;
+    top: 32px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #696969;
+}
+
+.file-item-title {
+    width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+
+.title {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    -webkit-app-region: drag;
+}
+
+#option {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 21px;
+    padding: 4px;
+    display: flex;
+    justify-content: space-between;
+}
