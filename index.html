@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件中转站</title>
+    <style>
+        html {
+            /* 设置滚动条的样式 */
+            scrollbar-arrow-color: red;
+            scrollbar-face-color: #000;
+            scrollbar-3dlight-color: #696969;
+            scrollbar-highlight-color: #696969;
+            scrollbar-shadow-color: #000;
+            scrollbar-darkshadow-color: #000;
+            scrollbar-track-color: #000;
+            /* 颜色 */
+            background-color: #FFFAEE;
+            color: #000000;
+        }
+
+        #container {
+            /* 定位 */
+            position: fixed;
+            top: 32px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* 布局 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+        .content p {
+            user-select: none;
+        }
+
+        .content img {
+            cursor: move;
+        }
+
+
+        .title {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 32px;
+            -webkit-app-region: drag;
+        }
+
+        #option {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 21px;
+            padding: 4px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div class="content">
+            <img src="public/copy.svg" id="target" />
+            <p id="text">拖拽你的文件到这里</p>
+        </div>
+    </div>
+    <div class="title">
+    </div>
+    <div id="option">
+        <button id="clear">清空</button>
+    </div>
+</body>
+<script>
+    const paths = [];
+    const container = document.getElementById('container');
+    const text = document.getElementById('text');
+    const clear = document.getElementById('clear');
+    const target = document.getElementById('target');
+    container.addEventListener('drop', e => {
+        e.preventDefault();
+        for (let i = 0; i < e.dataTransfer.files.length; i++) {
+            const file = e.dataTransfer.files.item(i);
+            const item = e.dataTransfer.items[i];
+            if (item.kind === 'file') {
+                const path = file.path;
+                if (paths.findIndex(e => e === path) === -1) {
+                    paths.push(path);
+                    text.innerText = "拖拽" + paths.length + "个文件（夹）离开这里"
+                }
+            }
+        }
+        return false;
+    })
+    container.addEventListener("dragenter", function (event) {
+        event.preventDefault();
+    });
+    container.addEventListener("dragover", function (event) {
+        event.preventDefault();
+    });
+
+    container.addEventListener("dragleave", function (event) {
+        event.preventDefault();
+    });
+
+    clear.addEventListener('click', () => {
+        paths.length = 0;
+        text.innerText = "拖拽你的文件到这里";
+    });
+
+    target.ondragstart = (event) => {
+        event.preventDefault()
+        utools.startDrag(paths);
+        paths.length = 0;
+        text.innerText = "拖拽你的文件到这里";
+    }
+
+</script>
+
+</html>
