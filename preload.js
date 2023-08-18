@@ -12,9 +12,6 @@ window.exports = {
                     transparent: false,
                     backgroundColor: '#000000',
                     hasShadow: false,
-                    webPreferences: {
-                        preload: 'index.js'
-                    },
                     titleBarStyle: 'hidden',
                     titleBarOverlay: true,
                     alwaysOnTop: true
