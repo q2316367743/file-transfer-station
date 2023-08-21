@@ -10,8 +10,8 @@
 </head>
 
 <body>
-<div id="app">
-    <div id="container" v-show="!mini">
+<div id="app" >
+    <div id="container" v-show="!mini" :style="{color: color, backgroundColor: backgroundColor}">
         <!-- 文件列表 -->
         <div id="file" v-if="listShow">
             <div class="file-item" v-for="(file, i) in files" :key="file.path">
@@ -28,8 +28,8 @@
             <p id="text">{{text}}</p>
         </div>
     </div>
-    <div class="title">
-        <div class="circle" @click="switchMini()"></div>
+    <div class="title" :style="{color: color, backgroundColor: backgroundColor}">
+        <div class="circle" @click="switchMini()" :style="{border: '1px solid ' + color}"></div>
         <div class="close" v-show="!mini" @click="close()">X</div>
     </div>
     <div id="option" v-show="!mini">

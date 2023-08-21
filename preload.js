@@ -8,7 +8,9 @@ const KEY_WINDOW_CLOSE = 'window-close';
 
 const SKIP_TASKBAR = '/setting/skipTaskbar';
 const ALWAYS_ON_TOP = '/setting/alwaysOnTop'
-
+const HEIGHT = '/setting/height';
+const WIDTH = '/setting/width';
+const BACKGROUND_COLOR = '/setting/backgroundColor';
 
 function getByDefault(key, defaultValue) {
     let value = utools.dbStorage.getItem(key);
@@ -17,11 +19,6 @@ function getByDefault(key, defaultValue) {
     }
     return value;
 }
-
-function setValue(key, value) {
-    utools.dbStorage.setItem(key, value);
-}
-
 
 window.exports = {
     "application": {
@@ -32,13 +29,13 @@ window.exports = {
                 const ubWindow = utools.createBrowserWindow('src/pages/main/index.html', {
                     useContentSize: true,
                     skipTaskbar: getByDefault(SKIP_TASKBAR, false),
-                    width: 200,
-                    height: 232,
+                    width: getByDefault(WIDTH, 200),
+                    height: getByDefault(HEIGHT, 232),
                     minWidth: 32,
                     minHeight: 32,
                     frame: true,
                     transparent: false,
-                    backgroundColor: '#000000',
+                    backgroundColor: '#ffffff',
                     hasShadow: false,
                     titleBarStyle: 'hidden',
                     alwaysOnTop: getByDefault(ALWAYS_ON_TOP, true),
@@ -75,38 +72,26 @@ window.exports = {
         }
     },
     "setting": {
-        mode: "list",
+        mode: "none",
         args: {
-            enter: (action, callbackSetList) => {
-                let skipTaskbar = getByDefault(SKIP_TASKBAR, false);
-                let alwaysOnTop = getByDefault(ALWAYS_ON_TOP, true);
-                callbackSetList([
-                    {
-                        title: skipTaskbar ? '隐藏' : '显示',
-                        description: '是否在任务栏中显示',
-                        key: SKIP_TASKBAR,
-                        value: skipTaskbar
-                    },
-
-                    {
-                        title: alwaysOnTop ? '始终置顶' : '不置顶',
-                        description: '是否始终置顶',
-                        key: ALWAYS_ON_TOP,
-                        value: alwaysOnTop
+            enter: () => {
+                const ubWindow = utools.createBrowserWindow('src/pages/setting/index.html', {
+                    useContentSize: true,
+                    width: 600,
+                    height: 400,
+                    frame: true,
+                    transparent: false,
+                    backgroundColor: '#ffffff',
+                    hasShadow: false,
+                }, () => {
+                    ubWindow.show();
+                    utools.hideMainWindow();
+                    if (utools.isDev()) {
+                        ubWindow.webContents.openDevTools();
+                    } else {
+                        utools.outPlugin();
                     }
-                ])
-            },
-            select: (action, itemData) => {
-                const key = itemData.key;
-                const value = itemData.value;
-                if (key === SKIP_TASKBAR) {
-                    setValue(key, !value);
-                } else if (key === ALWAYS_ON_TOP) {
-                    setValue(key, !value);
-                }
-                utools.hideMainWindow()
-                utools.outPlugin()
-                utools.showNotification("修改成功");
+                });
             },
         }
     }

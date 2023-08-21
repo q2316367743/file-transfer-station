@@ -1,4 +1,6 @@
 import {createApp} from "../../lib/vue@3.3.4@prod.js";
+import {getByDefault} from "../../global/utils.js";
+import {SETTING} from "../../global/constant.js";
 
 
 createApp({
@@ -6,7 +8,9 @@ createApp({
     data: () => ({
         files: [],
         listShow: false,
-        mini: false
+        mini: false,
+        backgroundColor:  getByDefault(SETTING.BACKGROUND_COLOR, "#FFFAEE"),
+        color:  getByDefault(SETTING.COLOR, "#000000"),
     }),
     computed: {
         available() {
