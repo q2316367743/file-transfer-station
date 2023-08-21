@@ -62,6 +62,7 @@ window.exports = {
                     ipcRenderer.on(KEY_WINDOW_CLOSE, () => {
                         ubWindow.destroy();
                         utools.outPlugin();
+                        process.exit(1);
                     })
                     utools.hideMainWindow();
                     if (utools.isDev()) {
