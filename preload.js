@@ -54,11 +54,9 @@ window.exports = {
                         // 窗口操作
                         try{
                             if (res) {
-                                utools.showNotification("最小化")
                                 // 变为最小化
                                 ubWindow.setContentSize(32, 32, true);
                             } else {
-                                utools.showNotification("最大化")
                                 ubWindow.setContentSize(200, 232, true);
                             }
                         }catch (e) {
