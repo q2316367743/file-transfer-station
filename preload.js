@@ -61,6 +61,10 @@ window.exports = {
                         utools.outPlugin();
                         process.exit(1);
                     })
+                    ubWindow.on('close', () => {
+                        utools.outPlugin();
+                        process.exit(1);
+                    })
                     utools.hideMainWindow();
                     if (utools.isDev()) {
                         ubWindow.webContents.openDevTools();
