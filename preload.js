@@ -10,7 +10,6 @@ const SKIP_TASKBAR = '/setting/skipTaskbar';
 const ALWAYS_ON_TOP = '/setting/alwaysOnTop'
 const HEIGHT = '/setting/height';
 const WIDTH = '/setting/width';
-const BACKGROUND_COLOR = '/setting/backgroundColor';
 
 function getByDefault(key, defaultValue) {
     let value = utools.dbStorage.getItem(key);
@@ -26,7 +25,7 @@ window.exports = {
         args: {
             // 进入插件应用时调用
             enter: () => {
-                const ubWindow = utools.createBrowserWindow('src/pages/main/index.html', {
+                let ubWindow = utools.createBrowserWindow('src/pages/main/index.html', {
                     useContentSize: true,
                     skipTaskbar: getByDefault(SKIP_TASKBAR, false),
                     width: getByDefault(WIDTH, 200),
@@ -45,6 +44,12 @@ window.exports = {
                     }
                 }, () => {
                     ubWindow.show();
+                    utools.hideMainWindow();
+                    if (utools.isDev()) {
+                        ubWindow.webContents.openDevTools();
+                    } else {
+                        utools.outPlugin();
+                    }
                     // 将窗口ID发送过去
                     ipcRenderer.sendTo(ubWindow.webContents.id, KEY, '');
                     ipcRenderer.on(KEY_WINDOW, (event, res) => {
@@ -65,12 +70,6 @@ window.exports = {
                         utools.outPlugin();
                         process.exit(1);
                     })
-                    utools.hideMainWindow();
-                    if (utools.isDev()) {
-                        ubWindow.webContents.openDevTools();
-                    } else {
-                        utools.outPlugin();
-                    }
                 });
             }
         }
