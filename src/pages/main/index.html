@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件中转站</title>
+    <link rel="stylesheet" href="../../global/global.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+<div id="app">
+    <div id="container" v-show="!mini">
+        <!-- 文件列表 -->
+        <div id="file" v-if="listShow">
+            <div class="file-item" v-for="(file, i) in files" :key="file.path">
+                <label>
+                    <input type="checkbox" v-model="file.checked">
+                </label>
+                <div class="file-item-title" :title="file.path" @click="showInExplorer(file.path)">{{file.name}}</div>
+                <button @click="remove(i)">删除</button>
+            </div>
+        </div>
+        <!-- 主体 -->
+        <div id="content" v-show="!listShow">
+            <img src="../../../public/copy.svg" id="target"/>
+            <p id="text">{{text}}</p>
+        </div>
+    </div>
+    <div class="title">
+        <div class="circle" @click="switchMini()"></div>
+        <div class="close" v-show="!mini" @click="close()">X</div>
+    </div>
+    <div id="option" v-show="!mini">
+        <button @click="listShow = !listShow" :disabled="files.length === 0">文件列表</button>
+        <button @click="clear()" :disabled="files.length === 0">清空</button>
+    </div>
+</div>
+</body>
+
+<script src="index.js" type="module"></script>
+
+</html>

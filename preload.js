@@ -1,4 +1,11 @@
+const {ipcRenderer} = require('electron');
+
 // 常量
+const KEY = "file-transfer-station";
+// 窗口操作
+const KEY_WINDOW = 'window';
+const KEY_WINDOW_CLOSE = 'window-close';
+
 const SKIP_TASKBAR = '/setting/skipTaskbar';
 const ALWAYS_ON_TOP = '/setting/alwaysOnTop'
 
@@ -22,25 +29,46 @@ window.exports = {
         args: {
             // 进入插件应用时调用
             enter: () => {
-                const ubWindow = utools.createBrowserWindow('index.html', {
+                const ubWindow = utools.createBrowserWindow('src/pages/main/index.html', {
                     useContentSize: true,
                     skipTaskbar: getByDefault(SKIP_TASKBAR, false),
                     width: 200,
                     height: 232,
+                    minWidth: 32,
+                    minHeight: 32,
                     frame: true,
                     transparent: false,
                     backgroundColor: '#000000',
                     hasShadow: false,
                     titleBarStyle: 'hidden',
-                    titleBarOverlay: true,
                     alwaysOnTop: getByDefault(ALWAYS_ON_TOP, true),
-                    resizable: true
+                    resizable: false,
+                    webPreferences: {
+                        preload: 'src/pages/main/preload.js'
+                    }
                 }, () => {
-                    // 设置窗口是否可以由用户手动最大化。
-                    ubWindow.setMaximizable(false)
-                    // 设置用户是否可以调节窗口尺寸
-                    ubWindow.setResizable(false)
                     ubWindow.show();
+                    // 将窗口ID发送过去
+                    ipcRenderer.sendTo(ubWindow.webContents.id, KEY, '');
+                    ipcRenderer.on(KEY_WINDOW, (event, res) => {
+                        // 窗口操作
+                        try{
+                            if (res) {
+                                utools.showNotification("最小化")
+                                // 变为最小化
+                                ubWindow.setContentSize(32, 32, true);
+                            } else {
+                                utools.showNotification("最大化")
+                                ubWindow.setContentSize(200, 232, true);
+                            }
+                        }catch (e) {
+                            utools.showNotification('系统错误，' + e.message)
+                        }
+                    });
+                    ipcRenderer.on(KEY_WINDOW_CLOSE, () => {
+                        ubWindow.destroy();
+                        utools.outPlugin();
+                    })
                     utools.hideMainWindow();
                     if (utools.isDev()) {
                         ubWindow.webContents.openDevTools();

@@ -1,14 +1,20 @@
+import {createApp} from "../../lib/vue@3.3.4@prod.js";
 
-const el = new Vue({
+
+createApp({
     el: '#app',
-    data: {
+    data: () => ({
         files: [],
-        listShow: false
-    },
+        listShow: false,
+        mini: false
+    }),
     computed: {
+        available() {
+            return this.files.filter(e => e.checked).length;
+        },
         text() {
             if (this.files.length > 0) {
-                return "拖拽" + this.files.length + "个文件（夹）离开这里"
+                return `拖拽${this.available}个文件，共${this.files.length}个文件`
             } else {
                 return "拖拽你的文件到这里";
             }
@@ -26,7 +32,8 @@ const el = new Vue({
                     if (this.files.findIndex(e => e.path === file.path) === -1) {
                         this.files.push({
                             path: file.path,
-                            name: file.name
+                            name: file.name,
+                            checked: true
                         });
                     }
                 }
@@ -45,8 +52,7 @@ const el = new Vue({
         });
         target.ondragstart = (event) => {
             event.preventDefault()
-            utools.startDrag(this.files.map(e => e.path));
-            this.files = [];
+            utools.startDrag(this.files.filter(e => e.checked).map(e => e.path));
         }
     },
     methods: {
@@ -59,8 +65,15 @@ const el = new Vue({
                 this.listShow = false;
             }
         },
-        showInExplorer(path){
+        showInExplorer(path) {
             utools.shellShowItemInFolder(path);
+        },
+        switchMini() {
+            this.mini = !this.mini;
+            window.preload.sendMsg('window', this.mini);
+        },
+        close() {
+            window.preload.sendMsg('window-close');
         }
     }
-})
+}).mount('#app')

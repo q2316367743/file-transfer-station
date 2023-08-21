@@ -1,35 +1,3 @@
-::-webkit-scrollbar {
-    /*滚动条整体样式*/
-    width: 5px;
-    /*高宽分别对应横竖滚动条的尺寸*/
-    height: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-    /*滚动条里面小方块*/
-    border-radius: 3px;
-    background-color: #696969;
-}
-
-::-webkit-scrollbar-track {
-    /*滚动条里面轨道*/
-    border-radius: 3px;
-    background: #FFFAEE;
-}
-
-html {
-    /* 设置滚动条的样式 */
-    scrollbar-arrow-color: red;
-    scrollbar-face-color: #000;
-    scrollbar-3dlight-color: #696969;
-    scrollbar-highlight-color: #696969;
-    scrollbar-shadow-color: #000;
-    scrollbar-darkshadow-color: #000;
-    scrollbar-track-color: #000;
-    /* 颜色 */
-    background-color: #FFFAEE;
-    color: #000000;
-}
 
 #container {
     /* 定位 */
@@ -89,7 +57,7 @@ html {
     top: 0;
     left: 0;
     right: 0;
-    height: 32px;
+    height: 36px;
     -webkit-app-region: drag;
 }
 
@@ -102,4 +70,25 @@ html {
     padding: 4px;
     display: flex;
     justify-content: space-between;
+}
+
+.circle {
+    height: 16px;
+    width: 16px;
+    border-radius: 4px;
+    border: 1px solid #696969;
+    margin: 10px;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+}
+
+.close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    cursor: pointer;
+    height: 16px;
+    width: 16px;
+    text-align: center;
+    -webkit-app-region: no-drag;
 }
