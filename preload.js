@@ -52,15 +52,11 @@ window.exports = {
                     ipcRenderer.sendTo(ubWindow.webContents.id, KEY, '');
                     ipcRenderer.on(KEY_WINDOW, (event, res) => {
                         // 窗口操作
-                        try{
-                            if (res) {
-                                // 变为最小化
-                                ubWindow.setContentSize(32, 32, true);
-                            } else {
-                                ubWindow.setContentSize(200, 232, true);
-                            }
-                        }catch (e) {
-                            utools.showNotification('系统错误，' + e.message)
+                        if (res) {
+                            // 变为最小化
+                            ubWindow.setContentSize(32, 32, true);
+                        } else {
+                            ubWindow.setContentSize(200, 232, true);
                         }
                     });
                     ipcRenderer.on(KEY_WINDOW_CLOSE, () => {
