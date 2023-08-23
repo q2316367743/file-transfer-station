@@ -1,2 +1,7 @@
+.vscode
+.git
+.idea
 node_modules
-dist
+src-utools/dist
+src-utools/node_modules
+*.iml
