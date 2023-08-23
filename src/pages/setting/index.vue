@@ -16,11 +16,17 @@
             <a-input-number :min="150" v-model="width" style="width: 150px;">
                 <template #suffix>px</template>
             </a-input-number>
+            <template #help>
+                不能小于150px
+            </template>
         </a-form-item>
         <a-form-item label="高">
             <a-input-number :min="182" v-model="height" style="width: 150px;">
                 <template #suffix>px</template>
             </a-input-number>
+            <template #help>
+                不能小于182px
+            </template>
         </a-form-item>
         <a-form-item label="背景颜色">
             <color-picker v-model:color="backgroundColor"/>
