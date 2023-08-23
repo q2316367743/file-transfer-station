@@ -1,0 +1,45 @@
+{
+    "preload": "preload.js",
+    "logo": "public/logo.png",
+    "main": "src/pages/setting/index.html",
+    "platform": [
+        "win32",
+        "darwin",
+        "linux"
+    ],
+    "development": {
+        "main": "http://localhost:5173/"
+    },
+    "pluginSetting": {
+        "single": true,
+        "height": 0
+    },
+    "features": [
+        {
+            "code": "setting",
+            "explain": "文件中转站",
+            "icon": "public/logo.png",
+            "platform": [
+                "win32",
+                "darwin",
+                "linux"
+            ],
+            "cmds": [
+                "设置"
+            ]
+        },
+        {
+            "code": "application",
+            "explain": "文件中转站",
+            "icon": "public/logo.png",
+            "platform": [
+                "win32",
+                "darwin",
+                "linux"
+            ],
+            "cmds": [
+                "文件中转站"
+            ]
+        }
+    ]
+}

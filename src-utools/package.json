@@ -1,0 +1,20 @@
+{
+  "name": "file-transfer-station",
+  "version": "1.0.0",
+  "description": "文件中转站",
+  "main": "preload.js",
+  "type": "commonjs",
+  "scripts": {},
+  "keywords": [
+    "文件中转站",
+    "utools",
+    "utools插件"
+  ],
+  "author": "Esion",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.5.0",
+    "electron": "^26.0.0",
+    "utools-api-types": "^4.0.0"
+  }
+}
