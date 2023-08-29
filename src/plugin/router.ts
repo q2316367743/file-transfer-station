@@ -11,14 +11,6 @@ const router = createRouter({
         name: "主页",
         path: '/home',
         component: () => import('@/pages/home/index.vue')
-    }, {
-        name: "规则",
-        path: '/rule',
-        component: () => import('@/pages/rule/index.vue')
-    }, {
-        name: "设置",
-        path: '/setting',
-        component: () => import('@/pages/setting/index.vue')
     }]
 });
 
