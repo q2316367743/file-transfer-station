@@ -1,28 +1,38 @@
-import {createApp} from "../../lib/vue@3.3.4@prod.js";
-import {getByDefault} from "../../global/utils.js";
-import {SETTING} from "../../global/constant.js";
+import {createApp, toRaw} from "../../lib/vue@3.3.4@prod.js";
+import {getByDefault, setValue} from "../../global/utils.js";
+import {SETTING, STORAGE_FILES} from "../../global/constant.js";
 
 
 createApp({
     el: '#app',
     data: () => ({
+        storageFiles: [],
         files: [],
         listShow: false,
         mini: false,
-        backgroundColor:  getByDefault(SETTING.BACKGROUND_COLOR, "#FFFAEE"),
-        color:  getByDefault(SETTING.COLOR, "#000000"),
+        backgroundColor: getByDefault(SETTING.BACKGROUND_COLOR, "#FFFAEE"),
+        color: getByDefault(SETTING.COLOR, "#000000"),
     }),
     computed: {
         available() {
-            return this.files.filter(e => e.checked).length;
+            return this.files.filter(e => e.checked).length + this.storageFiles.filter(e => e.checked).length;
         },
         text() {
-            if (this.files.length > 0) {
-                return `拖拽${this.available}个文件，共${this.files.length}个文件`
+            if (this.fileLength > 0) {
+                return `拖拽${this.available}个文件，共${this.fileLength}个文件`
             } else {
                 return "拖拽你的文件到这里";
             }
+        },
+        fileExist() {
+            return this.files.length > 0 || this.storageFiles.length > 0;
+        },
+        fileLength() {
+            return this.files.length + this.storageFiles.length;
         }
+    },
+    created(){
+        this.storageFiles = getByDefault(STORAGE_FILES, []);
     },
     mounted() {
         const container = document.getElementById('container');
@@ -56,16 +66,22 @@ createApp({
         });
         target.ondragstart = (event) => {
             event.preventDefault()
-            utools.startDrag(this.files.filter(e => e.checked).map(e => e.path));
+            utools.startDrag([
+                ...this.storageFiles.filter(e => e.checked).map(e => e.path),
+                ...this.files.filter(e => e.checked).map(e => e.path)
+            ]);
         }
     },
     methods: {
         clear() {
             this.files = [];
+            if (!this.fileExist) {
+                this.listShow = false;
+            }
         },
         remove(i) {
             this.files.splice(i, 1);
-            if (this.files.length === 0) {
+            if (!this.fileExist) {
                 this.listShow = false;
             }
         },
@@ -78,6 +94,16 @@ createApp({
         },
         close() {
             window.preload.sendMsg('window-close');
+        },
+        toTop(index) {
+            const files = this.files.splice(index, 1);
+            this.storageFiles.push(files[0]);
+            setValue(STORAGE_FILES, toRaw(this.storageFiles));
+        },
+        toBottom(index) {
+            const files = this.storageFiles.splice(index, 1);
+            this.files.push(files[0]);
+            setValue(STORAGE_FILES, toRaw(this.storageFiles));
         }
     }
 }).mount('#app')

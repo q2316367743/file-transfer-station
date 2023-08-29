@@ -6,3 +6,5 @@ export const SETTING = {
     BACKGROUND_COLOR: '/setting/backgroundColor',
     COLOR: '/setting/color'
 }
+
+export const STORAGE_FILES = '/storage/files'

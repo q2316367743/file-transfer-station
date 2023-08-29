@@ -4,7 +4,6 @@ import {getByDefault, setValue} from "../../global/utils.js";
 
 
 createApp({
-    el: '#app',
     data: () => ({
         skipTaskbar: getByDefault(SETTING.SKIP_TASKBAR, false),
         alwaysOnTop: getByDefault(SETTING.ALWAYS_ON_TOP, true),
