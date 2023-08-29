@@ -1,0 +1,30 @@
+::-webkit-scrollbar {
+    /*滚动条整体样式*/
+    width: 5px;
+    /*高宽分别对应横竖滚动条的尺寸*/
+    height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    /*滚动条里面小方块*/
+    border-radius: 3px;
+    background-color: #696969;
+}
+
+::-webkit-scrollbar-track {
+    /*滚动条里面轨道*/
+    border-radius: 3px;
+    background: #FFFAEE;
+}
+
+html {
+    /* 设置滚动条的样式 */
+    scrollbar-arrow-color: red;
+    scrollbar-face-color: #000;
+    scrollbar-3dlight-color: #696969;
+    scrollbar-highlight-color: #696969;
+    scrollbar-shadow-color: #000;
+    scrollbar-darkshadow-color: #000;
+    scrollbar-track-color: #000;
+    /* 颜色 */
+}
