@@ -31,7 +31,7 @@ createApp({
             return this.files.length + this.storageFiles.length;
         }
     },
-    created(){
+    created() {
         this.storageFiles = getByDefault(STORAGE_FILES, []);
     },
     mounted() {
@@ -43,7 +43,8 @@ createApp({
                 const file = e.dataTransfer.files.item(i);
                 const item = e.dataTransfer.items[i];
                 if (item.kind === 'file') {
-                    if (this.files.findIndex(e => e.path === file.path) === -1) {
+                    if (this.files.findIndex(e => e.path === file.path) === -1 &&
+                        this.storageFiles.findIndex(e => e.path === file.path) === -1) {
                         this.files.push({
                             path: file.path,
                             name: file.name,
