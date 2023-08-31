@@ -60,6 +60,15 @@
                 <input class="layui-colorpicker" type="color" v-model="color">
             </div>
         </div>
+        <div class="layui-form-item" pane>
+            <label class="layui-form-label">拷贝的文件</label>
+            <div class="layui-input-block">
+                <label>
+                    <input type="checkbox" v-model="readCopyFiles">
+                    启动时，{{readCopyFiles ? '读取' : '不读取'}}剪切板的文件
+                </label>
+            </div>
+        </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn" @click="save()">保存</button>

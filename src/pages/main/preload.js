@@ -1,4 +1,5 @@
-const {ipcRenderer} = require('electron')
+const {ipcRenderer} = require('electron');
+const {basename} = require('path')
 let parentId = null;
 
 // 默认KEY
@@ -33,5 +34,8 @@ window.preload = {
         if (parentId) {
             ipcRenderer.sendTo(parentId || id, channel, msg);
         }
+    },
+    baseName(path) {
+        return basename(path);
     }
 }

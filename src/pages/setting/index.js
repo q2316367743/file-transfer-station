@@ -11,6 +11,7 @@ createApp({
         height: getByDefault(SETTING.HEIGHT, 232),
         backgroundColor:  getByDefault(SETTING.BACKGROUND_COLOR, "#FFFAEE"),
         color:  getByDefault(SETTING.COLOR, "#000000"),
+        readCopyFiles:  getByDefault(SETTING.READ_COPY_FILES, false),
     }),
     watch: {
         skipTaskbar(newValue) {
@@ -44,6 +45,7 @@ createApp({
             setValue(SETTING.HEIGHT, this.height);
             setValue(SETTING.BACKGROUND_COLOR, this.backgroundColor);
             setValue(SETTING.COLOR, this.color);
+            setValue(SETTING.READ_COPY_FILES, this.readCopyFiles);
             layer.msg("保存成功");
         }
     }

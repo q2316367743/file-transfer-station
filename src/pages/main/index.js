@@ -33,6 +33,13 @@ createApp({
     },
     created() {
         this.storageFiles = getByDefault(STORAGE_FILES, []);
+        if (getByDefault(SETTING.READ_COPY_FILES, false)) {
+            this.files = utools.getCopyedFiles().map(e => ({
+                path: e.path,
+                name: window.preload.baseName(e.path),
+                checked: true
+            }));
+        }
     },
     mounted() {
         const container = document.getElementById('container');
