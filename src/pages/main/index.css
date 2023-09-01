@@ -44,7 +44,7 @@
 }
 
 .file-item-title {
-    width: 100px;
+    width: calc(100% - 100px);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

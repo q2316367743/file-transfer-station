@@ -38,7 +38,6 @@ window.exports = {
                     hasShadow: false,
                     titleBarStyle: 'hidden',
                     alwaysOnTop: getByDefault(ALWAYS_ON_TOP, true),
-                    resizable: false,
                     webPreferences: {
                         preload: 'src/pages/main/preload.js'
                     }

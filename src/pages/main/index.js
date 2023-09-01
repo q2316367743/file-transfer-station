@@ -1,6 +1,6 @@
-import {createApp, toRaw} from "../../lib/vue@3.3.4@prod.js";
-import {getByDefault, setValue} from "../../global/utils.js";
-import {SETTING, STORAGE_FILES} from "../../global/constant.js";
+import { createApp, toRaw } from "../../lib/vue@3.3.4@prod.js";
+import { getByDefault, setValue } from "../../global/utils.js";
+import { SETTING, STORAGE_FILES } from "../../global/constant.js";
 
 
 createApp({
@@ -34,11 +34,18 @@ createApp({
     created() {
         this.storageFiles = getByDefault(STORAGE_FILES, []);
         if (getByDefault(SETTING.READ_COPY_FILES, false)) {
-            this.files = utools.getCopyedFiles().map(e => ({
-                path: e.path,
-                name: window.preload.baseName(e.path),
-                checked: true
-            }));
+            try {
+                const files = utools.getCopyedFiles();
+                if (files) {
+                    this.files = files.map(e => ({
+                        path: e.path,
+                        name: window.preload.baseName(e.path),
+                        checked: true
+                    }));
+                }
+            } catch (e) {
+                console.error(e);
+            }
         }
     },
     mounted() {
