@@ -12,52 +12,65 @@
 
 <body>
 <div id="app">
-    <div id="container" v-show="!mini" :style="{color: color, backgroundColor: backgroundColor}">
-        <!-- 文件列表 -->
-        <div id="file" v-if="listShow">
-            <div class="file-item" v-for="(file, i) in storageFiles" :key="file.path">
-                <label>
-                    <input type="checkbox" v-model="file.checked">
-                </label>
-                <div class="file-item-title" :title="file.path" @click="showInExplorer(file.path)">{{file.name}}</div>
-                <button title="置顶" @click="toBottom(i)">取消置顶</button>
+    <!-- 主体 -->
+    <main id="main" class="swiper-container">
+        <!-- Swiper -->
+        <div class="swiper-wrapper">
+            <!-- 拖拽复制 -->
+            <div class="swiper-slide" id="transfer">
+                <div class="container" ref="container" >
+                    <img src="../../../public/copy.svg" ref="target" alt="拖拽" title="拖拽此图标到指定目录"/>
+                    <p id="text">{{text}}</p>
+                    <div class="option" v-show="!mini">
+                        <button @click="listShow = !listShow" :disabled="!fileExist">文件列表</button>
+                        <button @click="clear()" :disabled="!fileExist">清空</button>
+                    </div>
+                    <!-- 文件列表 -->
+                    <div class="file" v-if="listShow"  :style="{color: color, backgroundColor: backgroundColor}">
+                        <div class="file-item" v-for="(file, i) in storageFiles" :key="file.path">
+                            <label>
+                                <input type="checkbox" v-model="file.checked">
+                            </label>
+                            <div class="file-item-title" :title="file.path" @click="showInExplorer(file.path)">
+                                {{file.name}}
+                            </div>
+                            <button title="置顶" @click="toBottom(i)">取消置顶</button>
+                        </div>
+                        <div class="file-item" v-for="(file, i) in files" :key="file.path">
+                            <label>
+                                <input type="checkbox" v-model="file.checked">
+                            </label>
+                            <div class="file-item-title" :title="file.path" @click="showInExplorer(file.path)">
+                                {{file.name}}
+                            </div>
+                            <button title="置顶" @click="toTop(i)">↑</button>
+                            <button @click="remove(i)">删除</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="file-item" v-for="(file, i) in files" :key="file.path">
-                <label>
-                    <input type="checkbox" v-model="file.checked">
-                </label>
-                <div class="file-item-title" :title="file.path" @click="showInExplorer(file.path)">{{file.name}}</div>
-                <button title="置顶" @click="toTop(i)">↑</button>
-                <button @click="remove(i)">删除</button>
+            <!-- 移动到指定目录 -->
+            <div class="swiper-slide" id="move">
+                <div class="container" ref="container">
+                    <img src="../../../public/move.svg" alt="移动" title="拖拽文件到这里"/>
+                    <p>{{text}}</p>
+                    <div class="option" v-show="!mini">
+                        <div class="path" :title="path" @click="showPathOnExplorer()">{{path || '未选择目录'}}</div>
+                        <button @click="selectPath()">选择目录</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- 主体 -->
-        <main id="main" v-show="!listShow" class="swiper-container">
-            <!-- Swiper -->
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="../../../public/copy.svg" id="target" alt="拖拽" title="拖拽此图标到指定目录"/>
-                    <p id="text">{{text}}</p>
-                </div>
-                <div class="swiper-slide">
-                    <img src="../../../public/copy.svg" id="target1" alt="拖拽" title="拖拽此图标到指定目录"/>
-                    <p id="text1">{{text}}</p>
-                </div>
-            </div>
-            <div class="swiper-pagination"></div>
-        </main>
-    </div>
-    <div class="title" :style="{color: color, backgroundColor: backgroundColor}">
-        <div class="circle" :style="{border: '1px solid ' + color}"></div>
-        <div class="close" v-show="!mini" @click="close()">X</div>
-    </div>
-    <div id="option" v-show="!mini"  :style="{color: color, backgroundColor: backgroundColor}">
-        <button @click="listShow = !listShow" :disabled="!fileExist">文件列表</button>
-        <button @click="clear()" :disabled="!fileExist">清空</button>
-    </div>
+        <div class="swiper-pagination"></div>
+    </main>
+    <header id="title">
+        <div class="circle"></div>
+    </header>
 </div>
 </body>
 
 <script src="index.js" type="module"></script>
+<script src="module/transfer.js" type="module"></script>
+<script src="module/move.js" type="module"></script>
 
 </html>
