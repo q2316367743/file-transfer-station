@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文件中转站</title>
     <link rel="stylesheet" href="../../global/global.css">
+    <link rel="stylesheet" href="../../lib/swiper/swiper-bundle.css">
     <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
-<div id="app" >
+<div id="app">
     <div id="container" v-show="!mini" :style="{color: color, backgroundColor: backgroundColor}">
         <!-- 文件列表 -->
         <div id="file" v-if="listShow">
@@ -31,16 +32,26 @@
             </div>
         </div>
         <!-- 主体 -->
-        <div id="content" v-show="!listShow">
-            <img src="../../../public/copy.svg" id="target"/>
-            <p id="text">{{text}}</p>
-        </div>
+        <main id="main" v-show="!listShow" class="swiper-container">
+            <!-- Swiper -->
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="../../../public/copy.svg" id="target" alt="拖拽" title="拖拽此图标到指定目录"/>
+                    <p id="text">{{text}}</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="../../../public/copy.svg" id="target1" alt="拖拽" title="拖拽此图标到指定目录"/>
+                    <p id="text1">{{text}}</p>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </main>
     </div>
     <div class="title" :style="{color: color, backgroundColor: backgroundColor}">
-        <div class="circle" @click="switchMini()" :style="{border: '1px solid ' + color}"></div>
+        <div class="circle" :style="{border: '1px solid ' + color}"></div>
         <div class="close" v-show="!mini" @click="close()">X</div>
     </div>
-    <div id="option" v-show="!mini">
+    <div id="option" v-show="!mini"  :style="{color: color, backgroundColor: backgroundColor}">
         <button @click="listShow = !listShow" :disabled="!fileExist">文件列表</button>
         <button @click="clear()" :disabled="!fileExist">清空</button>
     </div>

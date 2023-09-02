@@ -1,4 +1,5 @@
 import { createApp, toRaw } from "../../lib/vue@3.3.4@prod.js";
+import Swiper from '../../lib/swiper/swiper-bundle.esm.browser.min.js';
 import { getByDefault, setValue } from "../../global/utils.js";
 import { SETTING, STORAGE_FILES } from "../../global/constant.js";
 
@@ -9,7 +10,6 @@ createApp({
         storageFiles: [],
         files: [],
         listShow: false,
-        mini: false,
         backgroundColor: getByDefault(SETTING.BACKGROUND_COLOR, "#FFFAEE"),
         color: getByDefault(SETTING.COLOR, "#000000"),
     }),
@@ -86,6 +86,21 @@ createApp({
                 ...this.files.filter(e => e.checked).map(e => e.path)
             ]);
         }
+        const swiper = new Swiper(".swiper-container", {
+            grabCursor: true,
+            direction: 'vertical',
+
+            loop: true,
+            simulateTouch: false,
+
+            speed:800,
+            mousewheel: true,
+
+            pagination: {
+                el: ".swiper-pagination"
+            },
+        });
+
     },
     methods: {
         clear() {
@@ -102,10 +117,6 @@ createApp({
         },
         showInExplorer(path) {
             utools.shellShowItemInFolder(path);
-        },
-        switchMini() {
-            this.mini = !this.mini;
-            window.preload.sendMsg('window', this.mini);
         },
         close() {
             window.preload.sendMsg('window-close');

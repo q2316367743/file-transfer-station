@@ -30,13 +30,15 @@ window.exports = {
                     skipTaskbar: getByDefault(SKIP_TASKBAR, false),
                     width: getByDefault(WIDTH, 200),
                     height: getByDefault(HEIGHT, 232),
-                    minWidth: 32,
-                    minHeight: 32,
+                    minWidth: 172,
+                    minHeight: 204,
+                    maximizable: false,
                     frame: true,
                     transparent: false,
                     backgroundColor: '#ffffff',
                     hasShadow: false,
                     titleBarStyle: 'hidden',
+                    titleBarOverlay: true,
                     alwaysOnTop: getByDefault(ALWAYS_ON_TOP, true),
                     webPreferences: {
                         preload: 'src/pages/main/preload.js'
@@ -51,15 +53,6 @@ window.exports = {
                     }
                     // 将窗口ID发送过去
                     ipcRenderer.sendTo(ubWindow.webContents.id, KEY, '');
-                    ipcRenderer.on(KEY_WINDOW, (event, res) => {
-                        // 窗口操作
-                        if (res) {
-                            // 变为最小化
-                            ubWindow.setContentSize(32, 32, true);
-                        } else {
-                            ubWindow.setContentSize(200, 232, true);
-                        }
-                    });
                     ipcRenderer.on(KEY_WINDOW_CLOSE, () => {
                         ubWindow.destroy();
                         utools.outPlugin();
