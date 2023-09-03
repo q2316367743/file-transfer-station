@@ -18,15 +18,16 @@
         <div class="swiper-wrapper">
             <!-- 拖拽复制 -->
             <div class="swiper-slide" id="transfer">
-                <div class="container" ref="container" >
-                    <img src="../../../public/copy.svg" ref="target" alt="拖拽" title="拖拽此图标到指定目录"/>
+                <div class="container" ref="container">
+                    <img src="../../../public/copy.svg" ref="target" alt="拖拽" title="拖拽此图标到指定目录"
+                         :style="{cursor: available ? 'move' : 'default'}"/>
                     <p id="text">{{text}}</p>
                     <div class="option" v-show="!mini">
                         <button @click="listShow = !listShow" :disabled="!fileExist">文件列表</button>
                         <button @click="clear()" :disabled="!fileExist">清空</button>
                     </div>
                     <!-- 文件列表 -->
-                    <div class="file" v-if="listShow"  :style="{color: color, backgroundColor: backgroundColor}">
+                    <div class="file" v-if="listShow" :style="{color: color, backgroundColor: backgroundColor}">
                         <div class="file-item" v-for="(file, i) in storageFiles" :key="file.path">
                             <label>
                                 <input type="checkbox" v-model="file.checked">
@@ -60,6 +61,39 @@
                     </div>
                 </div>
             </div>
+            <!-- 压缩 -->
+            <div class="swiper-slide" id="compressing">
+                <div class="container" ref="container">
+                    <img src="../../../public/compress.svg" alt="压缩" title="拖拽文件（夹）到这里" class="icon"
+                         @click="save()" :style="{cursor: available ? 'pointer' : 'default'}"/>
+                    <p>{{text}}</p>
+                    <div class="option" v-show="!mini">
+                        <span>
+                        <button @click="listShow = !listShow" :disabled="!fileExist">查看文件</button>
+                        <button @click="clear()" :disabled="!fileExist" style="margin-left: 4px;">清空</button>
+                        </span>
+                        <label>
+                            <select v-model="type">
+                                <option value="zip">zip</option>
+                                <option value="tar">tar</option>
+                                <option value="tgz">tgz</option>
+                            </select>
+                        </label>
+                    </div>
+                    <!-- 文件列表 -->
+                    <div class="file" v-if="listShow" :style="{color: color, backgroundColor: backgroundColor}">
+                        <div class="file-item" v-for="(file, i) in files" :key="file.path">
+                            <label>
+                                <input type="checkbox" v-model="file.checked">
+                            </label>
+                            <div class="file-item-title" :title="file.path" @click="showInExplorer(file.path)">
+                                {{file.name}}
+                            </div>
+                            <button @click="remove(i)">删除</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="swiper-pagination"></div>
     </main>
@@ -72,5 +106,6 @@
 <script src="index.js" type="module"></script>
 <script src="module/transfer.js" type="module"></script>
 <script src="module/move.js" type="module"></script>
+<script src="module/compressing.js" type="module"></script>
 
 </html>

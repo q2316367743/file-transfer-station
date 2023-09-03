@@ -17,9 +17,9 @@ createApp({
         },
         text() {
             if (this.fileLength > 0) {
-                return `拖拽${this.available}个文件，共${this.fileLength}个文件`
+                return `拖拽图标到目标文件夹。（${this.available}/${this.fileLength}）`
             } else {
-                return "拖拽你的文件到这里";
+                return "拖拽你的文件（夹）到这里";
             }
         },
         fileExist() {
