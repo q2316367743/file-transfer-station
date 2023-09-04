@@ -13,7 +13,8 @@ const swiper = new Swiper(".swiper-container", {
     mousewheel: true,
 
     pagination: {
-        el: ".swiper-pagination"
+        el: ".swiper-pagination",
+        clickable: true
     },
 });
 

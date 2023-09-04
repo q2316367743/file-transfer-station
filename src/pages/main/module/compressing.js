@@ -87,15 +87,23 @@ createApp({
             }
             switch (this.type) {
                 case 'zip':
-                    window.preload.compressing.toZip(this.files.filter(e => e.checked).map(e => e.path), str);
+                    window.preload.compressing.toZip(this.files.filter(e => e.checked).map(e => e.path),
+                        str, () => this.afterComplete(str));
                     break;
                 case 'tar':
-                    window.preload.compressing.toTar(this.files.filter(e => e.checked).map(e => e.path), str);
+                    window.preload.compressing.toTar(this.files.filter(e => e.checked).map(e => e.path),
+                        str, () => this.afterComplete(str));
                     break;
                 case 'tgz':
-                    window.preload.compressing.toTgz(this.files.filter(e => e.checked).map(e => e.path), str);
+                    window.preload.compressing.toTgz(this.files.filter(e => e.checked).map(e => e.path),
+                        str, () => this.afterComplete(str));
                     break;
+                default:
+                    alert('压缩类型错误，无法压缩')
             }
+
+        },
+        afterComplete(str) {
             this.clear();
             const res = confirm("压缩成功，是否打开文件路径");
             if (res) {
@@ -104,4 +112,5 @@ createApp({
         }
 
     }
-}).mount('#compressing')
+}).mount('#compressing');
+

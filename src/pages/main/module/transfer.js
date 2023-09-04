@@ -10,6 +10,7 @@ createApp({
         listShow: false,
         backgroundColor: getByDefault(SETTING.BACKGROUND_COLOR, "#FFFAEE"),
         color: getByDefault(SETTING.COLOR, "#000000"),
+        syncRemove: false
     }),
     computed: {
         available() {
@@ -88,7 +89,20 @@ createApp({
     },
     methods: {
         clear() {
-            this.files = [];
+            const files = [];
+            if (this.syncRemove) {
+                // 遍历后删除
+                for(let file of this.files) {
+                    const state = window.preload.fs.statSync(file.path);
+                    if (!state.isFile()) {
+                        alert(`${file.name}不是文件，无法删除，请自行删除`);
+                        files.push(file);
+                        continue;
+                    }
+                    window.preload.fs.rmSync(file.path);
+                }
+            }
+            this.files = files;
             if (!this.fileExist) {
                 this.listShow = false;
             }

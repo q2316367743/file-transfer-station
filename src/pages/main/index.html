@@ -24,7 +24,11 @@
                     <p id="text">{{text}}</p>
                     <div class="option" v-show="!mini">
                         <button @click="listShow = !listShow" :disabled="!fileExist">文件列表</button>
-                        <button @click="clear()" :disabled="!fileExist">清空</button>
+                        <span>
+                        <input type="checkbox" title="是否同步删除文件" v-model="syncRemove" style="margin-right: 4px">
+                        <button @click="clear()"
+                                :disabled="!fileExist">{{syncRemove ? '删除文件' : '清空列表'}}</button>
+                        </span>
                     </div>
                     <!-- 文件列表 -->
                     <div class="file" v-if="listShow" :style="{color: color, backgroundColor: backgroundColor}">
